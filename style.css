@@ -1,0 +1,249 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #00ffde;
+    --background-color: #0a0f0d;
+    --text-color: #c5c5c5;
+    --correct-color: #00ffde;
+    --incorrect-color: #ff4141;
+    --font-family: 'Share Tech Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Animated Backgrounds --- */
+#milky-way-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url(https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80);
+    background-size: 50% 100%;
+    z-index: -2;
+    animation: slide 180s linear infinite;
+}
+
+@keyframes slide {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 90%;
+    max-width: 900px;
+    padding: 2rem;
+    border: 1px solid rgba(0, 255, 222, 0.2);
+    background: rgba(10, 15, 13, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1;
+}
+
+/* --- Header & Glitch Effect --- */
+.header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.header p {
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.glitch {
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+    color: white;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+.glitch:before, .glitch:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+.glitch:before {
+    left: -2px;
+    text-shadow: 2px 0 var(--incorrect-color);
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+.glitch:after {
+    left: 2px;
+    text-shadow: -2px 0 var(--primary-color);
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip: rect(42px, 9999px, 44px, 0); }
+    100% { clip: rect(90px, 9999px, 92px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip: rect(2px, 9999px, 10px, 0); }
+    100% { clip: rect(40px, 9999px, 45px, 0); }
+}
+
+/* --- Settings --- */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+.settings-label {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+}
+.btn-group {
+    display: flex;
+}
+.mode-btn, .challenge-type-btn, .challenge-len-btn {
+    font-family: var(--font-family);
+    background: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.mode-btn:hover, .challenge-type-btn:hover, .challenge-len-btn:hover,
+.mode-btn.active, .challenge-type-btn.active, .challenge-len-btn.active {
+    background: var(--primary-color);
+    color: var(--background-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+.btn-group button:not(:last-child) {
+    border-right: none;
+}
+
+/* --- Typing Area --- */
+.typing-area {
+    width: 100%;
+    position: relative;
+    min-height: 120px;
+}
+.text-display {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:2.5rem;
+    line-height: 2.5rem;
+    letter-spacing: 1px;
+    text-align: justify;
+    color: #522828; /* Untyped text color */
+    outline: none;
+    user-select: none;
+}
+.text-input {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0; z-index: -1; pointer-events: none;
+}
+#text-display span.correct { color: var(--correct-color); }
+#text-display span.incorrect { color: var(--incorrect-color); text-decoration: underline; }
+#text-display span.current {
+    background-color: rgba(0, 255, 222, 0.2);
+    color: white;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%, 100% { background-color: rgba(0, 255, 222, 0.2); }
+    50% { background-color: transparent; }
+}
+
+/* --- Stats --- */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.stat-box, .result-box { text-align: center; }
+.stat-label, .result-label { font-size: 0.9rem; color: var(--text-color); text-transform: uppercase; }
+.stat-value, .result-value { font-size: 2rem; color: white; text-shadow: 0 0 5px var(--primary-color); }
+
+/* --- Results Screen --- */
+#results-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+#results-screen h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.restart-btn {
+    font-family: var(--font-family);
+    background: transparent;
+    border: 1px solid var(--incorrect-color);
+    color: var(--incorrect-color);
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+.restart-btn:hover {
+    background: var(--incorrect-color);
+    color: white;
+    box-shadow: 0 0 15px var(--incorrect-color);
+}

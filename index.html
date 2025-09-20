@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Velocity // Typing Interface v2</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="milky-way-bg"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="glitch" data-text="TERMINAL VELOCITY">TERMINAL VELOCITY</h1>
+            <p>// Keystroke Dynamics Analyser v2.0 //</p>
+        </header>
+
+        <div id="game-area">
+            <div class="settings-grid">
+                <div class="settings-group">
+                    <div class="settings-label">Hand Mode</div>
+                    <div class="btn-group">
+                        <button class="mode-btn" data-mode="left">Left</button>
+                        <button class="mode-btn active" data-mode="both">Both</button>
+                        <button class="mode-btn" data-mode="right">Right</button>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-label">Challenge Type</div>
+                    <div class="btn-group">
+                        <button class="challenge-type-btn active" data-type="words">Words</button>
+                        <button class="challenge-type-btn" data-type="time">Time</button>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <div class="settings-label">Challenge Length</div>
+                    <div id="words-options" class="btn-group">
+                        <button class="challenge-len-btn" data-length="25">25</button>
+                        <button class="challenge-len-btn active" data-length="50">50</button>
+                        <button class="challenge-len-btn" data-length="100">100</button>
+                    </div>
+                    <div id="time-options" class="btn-group hidden">
+                        <button class="challenge-len-btn" data-length="30">30s</button>
+                        <button class="challenge-len-btn" data-length="60">60s</button>
+                        <button class="challenge-len-btn" data-length="120">120s</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="typing-area" class="typing-area">
+                <div id="text-display" class="text-display" tabindex="0"></div>
+                <input type="text" id="text-input" class="text-input" aria-label="Typing input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">WPM</div>
+                    <div id="wpm" class="stat-value">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Accuracy</div>
+                    <div id="accuracy" class="stat-value">100%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Timer / Words</div>
+                    <div id="timer" class="stat-value">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-screen" class="hidden">
+            <h2>// ANALYSIS COMPLETE //</h2>
+            <div class="results-grid">
+                <div class="result-box">
+                    <div class="result-label">Final WPM</div>
+                    <div id="final-wpm" class="result-value">0</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">Accuracy</div>
+                    <div id="final-accuracy" class="result-value">100%</div>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">Time Taken</div>
+                    <div id="final-time" class="result-value">0s</div>
+                </div>
+                 <div class="result-box">
+                    <div class="result-label">Characters</div>
+                    <div id="final-chars" class="result-value">0</div>
+                </div>
+            </div>
+            <button id="restart-btn" class="restart-btn">[ RESTART SEQUENCE ]</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
